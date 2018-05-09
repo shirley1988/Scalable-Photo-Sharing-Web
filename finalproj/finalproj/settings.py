@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from lib import constants
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,17 +21,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v+ta7l@@91hud3adj2wx^^@cb)7npf3muhgpq6!tr7f@all=@l'
+SECRET_KEY = '4jq!*k2^qv^2ioxu^ef+vw@yf@3b@i-xqr=o=$e5hryptnejdm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['finalproj.nqj6t3ipmm.us-west-2.elasticbeanstalk.com',
+                 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'photos.apps.PhotosConfig',
+    'lib.apps.LibConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +79,12 @@ WSGI_APPLICATION = 'finalproj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': constants.DB_NAME,
+        'USER': constants.DB_USER,
+        'PASSWORD': constants.DB_PASS,
+        'HOST': constants.DB_HOST,
+        'PORT': constants.DB_PORT,
     }
 }
 
@@ -118,3 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+CSRF_COOKIE_SECURE = False

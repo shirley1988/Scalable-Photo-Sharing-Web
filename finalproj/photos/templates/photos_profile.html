@@ -1,0 +1,28 @@
+<h2 class="page-header">User Information</h2>
+
+<form role="form" action="register" method="post">{% csrf_token %}
+<div class="col-sm-12 col-md-9 col-lg-8">
+
+    <div class="form-group row">
+        <label class="col-sm-6 col-md-4 col-lg-3 col-form-label">First Name</label>
+        <div class="col-sm-6 col-md-8 col-lg-6">
+            <p>{{ session_info.registered_first_name }}</p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-6 col-md-4 col-lg-3 col-form-label">Last Name</label>
+        <div class="col-sm-6 col-md-8 col-lg-6">
+            <p>{{ session_info.registered_last_name }}</p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-6 col-md-4 col-lg-3 col-form-label">Email</label>
+        <div class="col-sm-6 col-md-8 col-lg-6">
+            <p>{{ session_info.registered_email }}</p>
+        </div>
+    </div>
+
+</div>
+</form>

@@ -1,0 +1,24 @@
+<h2 class="page-header">Sign in to SharePhotos</h2>
+
+{% if error_message != None %} 
+<p><font color="red"> {{ error_message }} </font></p>
+{% endif %}
+
+<form role="form" action="/photos/signin" method="post">
+{% csrf_token %}
+    <div class="form-group row">
+        <label class="col-sm-4 col-md-2 col-lg-1 col-form-label">Email</label>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+            <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-4 col-md-2 col-lg-1 col-form-label">Password</label>
+        <div class="col-sm-4 col-md-3 col-lg-2">
+            <input type="password" name="auth" id="auth" class="form-control input-sm" placeholder="Password">
+        </div>
+    </div>
+
+    <input type="submit" value="Login" class="btn btn-info">
+</form>

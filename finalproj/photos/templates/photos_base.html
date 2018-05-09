@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Project</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/dashboard.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/photos">Share Photos</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% if session_info.registered_first_name == None %}
+            <li><a href="/photos/register">Register</a></li>
+            <li><a href="/photos/signin">Sign In</a></li>
+            {% else %}
+            <li><a href="/photos/">Hello {{ session_info.registered_first_name }}</a></li>
+            <li><a href="/photos/signout">Sign Out</a></li>
+            {% endif %}
+            <li><a href="/admin">Administrator</a></li>
+          </ul>
+          <!--form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form-->
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!--div class="col-sm-3 col-md-2 sidebar">
+          <h4>Filter by user</h4>
+          <div>
+          <ul class="nav nav-sidebar" id="user_filter" name="user_filter">
+          </ul>
+          </div>
+          <h4>Filter by category</h4>
+          <div>
+          <ul class="nav nav-sidebar", id="category_filter" name="category_filter">
+          </ul>
+          </div>
+        </div-->
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          {% include actual_page %}
+
+        </div>
+
+      </div>
+    </div>
+
+</body>
+
+</html>

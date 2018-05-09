@@ -1,0 +1,38 @@
+<h2 class="page-header">Share your case, benefit all interviewee</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class='col-sm-3 col-md-2'>Case ID</th>
+        <th class='col-sm-4 col-md-3'>Reporter</th>
+        <th class='col-sm-2 col-md-2'>Creation Date</th>
+        <th class='col-sm-2 col-md-2'>Last Updated</th>
+        <th class='col-sm-1 col-md-1'>Watch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1,001</td>
+        <td>Lorem</td>
+        <td>dolor</td>
+        <td>sit</td>
+        <td>yes</td>
+      </tr>
+      <tr>
+        <td>1,002</td>
+        <td>amet</td>
+        <td>consectetur</td>
+        <td>elit</td>
+        <td>no</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% if session_info.registered_email == None %}
+<h3><font color="green">Sign in or register to share you interview experience</font></h3>
+{% else %}
+<form role="form" action="/interviews/report", method="get">
+    <input type="submit" value="Share my interview experience" class="btn btn-info">
+</form>
+{% endif %}

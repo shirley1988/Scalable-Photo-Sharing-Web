@@ -1,0 +1,138 @@
+<script type="text/javascript">
+
+var photos_json_global = {{ photos | safe }};
+var photo_index_global = 0;
+
+function display_photo() {
+  var photo = photos_json_global[photo_index_global];
+  if (photo_index_global == 0) {
+    $('#btn_prev').prop('disabled', true);
+  } else {
+    $('#btn_prev').prop('disabled', false);
+  }
+  if (photo_index_global == photos_json_global.length - 1) {
+    $('#btn_next').prop('disabled', true);
+  } else {
+    $('#btn_next').prop('disabled', false);
+  }
+  $('#photo_display').attr('src', "http://dks4f9d9i9n12.cloudfront.net/" + photo.key);
+  $('#photo_count').html((photo_index_global + 1) + "/" + photos_json_global.length);
+  $('#photo_description').html(format_photo_desc(photo));
+}
+
+function subscribe() {
+  var subscriber = "{{ session_info.registered_email }}";
+  console.log(subscriber);
+  var target = photos_json_global[photo_index_global].user_email;
+  console.log(target);
+  $.get('/photos/subscribe', {"subscriber":subscriber,"target":target}).done(
+    function(data) {
+      if (data.result == 'success') {
+        $('#subscribe_confirm').html("Subscribed successfully!");
+        console.log("Successfully subscribed");
+      } else {
+        $('#subscribe_confirm').html("Failed to subscribe. Please try again.");
+        console.log("Subscriptions failed. " + data.error);
+      }
+      setTimeout(function() {
+        $('#subscribe_confirm').html("");
+      }, 5000);
+    });
+}
+
+
+function show_next() {
+  photo_index_global = photo_index_global + 1;
+  display_photo();
+}
+
+function show_previous() {
+  photo_index_global = photo_index_global - 1;
+  display_photo();
+}
+
+function format_photo_desc(photo) {
+    return photo.description + " (Uploaded by " + photo.user_name + " - " + photo.user_email + ")";
+}
+
+$(document).ready(function() {
+  var categories = ['General', 'Nature', 'Life', 'Animal', 'Fun'];
+  var select = $('#category');
+  $.each(categories, function(ix, category) {
+    select.append($('<option>', {
+      value: category,
+      text: category
+    }));
+  });
+  photo_index_global = 0;
+  display_photo();
+  var subscriber = "{{ session_info.registered_email }}";
+  if (subscriber.length > 5) {
+    $('#btn_subscribe').show();
+  } else {
+    $('#btn_subscribe').hide();
+  }
+});
+</script>
+
+<h2 class="page-header">Share your colorful life!</h2>
+
+<div id="photo_container" style="display:none"></div>
+
+<div class="panel" id="onlinephotos" name="onlinephotos">
+    <div class="panel-body">
+
+        <div class="control-group">
+            <label id="photo_description"></label>
+            <button type="button" onclick="subscribe();" id="btn_subscribe" style="display:none">Subscribe</button>
+            <label id="subscribe_confirm"></label>
+        </div>
+
+        <div class="control-group">
+           <img style="width:400px;height:300px" src="" id="photo_display">
+           </img>
+        </div>
+
+        <div class="control-group">
+            <button type="botton" id="btn_prev" onclick="show_previous();">Previous</button>
+            <label id="photo_count"></label>
+            <button type="botton" id="btn_next" onclick="show_next();">Next</button>
+        </div>
+
+    </div>
+
+</div>
+
+{% if session_info.registered_email == None %}
+<h3><font color="green">Sign in or register to share your photos</font></h3>
+{% else %}
+<form role="form" action="/photos/upload", method="post" enctype="multipart/form-data">
+    <div class="panel">
+        <div class="panel-body">
+
+            <div class="control-group">
+                <label class="control-label">Choose a category</label>
+                <select id="category" name="category">
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Add descriptions</label>
+            </div>
+
+            <div class="control-group">
+                <textarea cols=80 rows=2 id="description" name="description"></textarea>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Choose a photo</label>
+                <input id="photo" name="photo" type="FILE" >
+            </div>
+
+            <div class="control-group">
+                <button type="submit">Upload</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}
